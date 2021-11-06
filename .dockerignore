@@ -1,0 +1,12 @@
+.editorconfig
+.git/
+.github/
+.idea/
+
+LICENSE.md
+README.md
+
+config.example.yml
+docker-compose.example.yml
+
+*.test.go

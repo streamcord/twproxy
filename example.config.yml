@@ -1,0 +1,5 @@
+services:
+  main:
+    auth: ""
+    client_id: ""
+    client_secret: ""

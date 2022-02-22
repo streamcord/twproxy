@@ -58,7 +58,7 @@ func LogTwitchRequest(route string, service string, res helix.ResponseCommon, er
 	}
 
 	// Submit ratelimit info to datadog only if the request succeeded, i.e. we actually got a response from Twitch
-	if err != nil {
+	if err == nil {
 		ddErr = GlobalClient.Gauge(
 			MetricTwitchRatelimitRemaining,
 			float64(res.GetRateLimitRemaining()),

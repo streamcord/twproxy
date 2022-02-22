@@ -6,6 +6,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"os"
 	"twproxy/config"
+	"twproxy/dogstatsd"
 	"twproxy/twitch"
 )
 
@@ -18,8 +19,8 @@ func main() {
 
 	config.LoadConfig("config.yml")
 
+	dogstatsd.New()
 	twitch.CreateClientsFromServices(config.GlobalConfig.Services)
-	log.Info().Msgf("Created helix clients for %d service(s)", len(twitch.GlobalClients))
 
 	r := NewRouter()
 	r.Run("0.0.0.0:8181")

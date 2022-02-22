@@ -7,7 +7,14 @@ type Service struct {
 	ClientSecret string `yaml:"client_secret"`
 }
 
+// DogStatsD ...
+type DogStatsD struct {
+	Address   string `yaml:"address"`
+	Namespace string `yaml:"namespace"`
+}
+
 // Config ...
 type Config struct {
-	Services map[string]Service `yaml:"services"`
+	DogStatsD DogStatsD          `yaml:"dogStatsD"`
+	Services  map[string]Service `yaml:"services"`
 }

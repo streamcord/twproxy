@@ -4,6 +4,7 @@ import (
 	"github.com/nicklaw5/helix"
 	"github.com/rs/zerolog/log"
 	"time"
+	"twproxy/dogstatsd"
 )
 
 // EnsureAppAccessToken requests an App Access Token and creates a background task to automatically refresh the token
@@ -32,7 +33,11 @@ func EnsureAppAccessToken(svcName string, c *helix.Client) {
 }
 
 func requestToken(svcName string, c *helix.Client) helix.AccessCredentials {
+	start := time.Now()
 	res, err := c.RequestAppAccessToken([]string{})
+	d := time.Now().Sub(start)
+	go dogstatsd.LogTwitchRequest(dogstatsd.RouteGetOauthToken, svcName, res.ResponseCommon, err, d)
+
 	if err != nil {
 		log.Fatal().
 			Str("service", svcName).

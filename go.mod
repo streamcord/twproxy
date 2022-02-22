@@ -3,6 +3,7 @@ module twproxy
 go 1.16
 
 require (
+	github.com/DataDog/datadog-go/v5 v5.0.2 // indirect
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect

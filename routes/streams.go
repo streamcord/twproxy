@@ -3,6 +3,8 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/nicklaw5/helix"
+	"time"
+	"twproxy/dogstatsd"
 	"twproxy/utils"
 )
 
@@ -10,6 +12,7 @@ import (
 func GetStreams(c *gin.Context) {
 	t := c.MustGet("helix").(*helix.Client)
 
+	start := time.Now()
 	res, err := t.GetStreams(&helix.StreamsParams{
 		After:      c.Query("after"),
 		Before:     c.Query("before"),
@@ -20,6 +23,9 @@ func GetStreams(c *gin.Context) {
 		UserIDs:    c.QueryArray("user_id"),
 		UserLogins: c.QueryArray("user_login"),
 	})
+	d := time.Now().Sub(start)
+	go dogstatsd.LogTwitchRequest(dogstatsd.RouteGetStreams, c.GetHeader("Client-ID"), res.ResponseCommon, err, d)
+
 	if err != nil {
 		c.AbortWithStatusJSON(500, gin.H{
 			"error":   "Internal Server Error",

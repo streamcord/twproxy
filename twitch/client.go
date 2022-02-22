@@ -54,4 +54,6 @@ func CreateClientsFromServices(s map[string]config.Service) {
 		log.Debug().Msgf("Creating helix client for service '%s'", name)
 		GlobalClients[name] = NewClientFromService(name, svc)
 	}
+
+	log.Info().Msgf("Created helix clients for %d service(s)", len(GlobalClients))
 }

@@ -8,7 +8,8 @@ import (
 
 // NewRouter ...
 func NewRouter() *gin.Engine {
-	r := gin.Default()
+	r := gin.New()
+	r.Use(middleware.LoggerMiddleware) // Register last
 
 	h := r.Group("/helix")
 	h.Use(middleware.AuthMiddleware)

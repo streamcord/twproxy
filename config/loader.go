@@ -14,11 +14,11 @@ func LoadConfig(path string) {
 	file, err := ioutil.ReadFile(path)
 
 	if err != nil {
-		log.Fatal().Msgf("Failed to read yaml file", err)
+		log.Fatal().Err(err).Msg("Failed to read yaml file")
 	}
 
 	err = yaml.Unmarshal(file, &GlobalConfig)
 	if err != nil {
-		log.Fatal().Msgf("Failed to parse yaml", err)
+		log.Fatal().Err(err).Msg("Failed to parse yaml")
 	}
 }

@@ -62,7 +62,9 @@ func LogTwitchRequest(route string, service string, res helix.ResponseCommon, er
 		ddErr = GlobalClient.Gauge(
 			MetricTwitchRatelimitRemaining,
 			float64(res.GetRateLimitRemaining()),
-			[]string{},
+			[]string{
+				"service:" + service,
+			},
 			GlobalRate,
 		)
 		if ddErr != nil {

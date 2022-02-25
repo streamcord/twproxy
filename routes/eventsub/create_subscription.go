@@ -38,7 +38,7 @@ func CreateEventSubSubscription(c *gin.Context) {
 	go dogstatsd.LogTwitchRequest(dogstatsd.RouteCreateEventSubSubscription, c.GetHeader("Client-ID"), res.ResponseCommon, err, d)
 	go func() {
 		svc := c.GetHeader("Client-ID")
-		dogstatsd.LogTwitchRequest(dogstatsd.RouteGetEventSubSubscriptions, svc, res.ResponseCommon, err, d)
+		dogstatsd.LogTwitchRequest(dogstatsd.RouteCreateEventSubSubscription, svc, res.ResponseCommon, err, d)
 		dogstatsd.LogEventSubSubscriptionCount(res, svc)
 	}()
 

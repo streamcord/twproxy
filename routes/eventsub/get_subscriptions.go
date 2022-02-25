@@ -1,4 +1,4 @@
-package routes
+package eventsub
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,17 +7,22 @@ import (
 	"twproxy/dogstatsd"
 )
 
-// GetGames - Proxy of https://dev.twitch.tv/docs/api/reference#get-games
-func GetGames(c *gin.Context) {
+// GetEventSubSubscriptions - Proxy of https://dev.twitch.tv/docs/api/reference#get-eventsub-subscriptions
+func GetEventSubSubscriptions(c *gin.Context) {
 	t := c.MustGet("helix").(*helix.Client)
 
 	start := time.Now()
-	res, err := t.GetGames(&helix.GamesParams{
-		IDs:   c.QueryArray("id"),
-		Names: c.QueryArray("name"),
+	res, err := t.GetEventSubSubscriptions(&helix.EventSubSubscriptionsParams{
+		Status: c.Query("status"),
+		Type:   c.Query("type"),
+		After:  c.Query("after"),
 	})
 	d := time.Now().Sub(start)
-	go dogstatsd.LogTwitchRequest(dogstatsd.RouteGetGames, c.GetHeader("Client-ID"), res.ResponseCommon, err, d)
+	go func() {
+		svc := c.GetHeader("Client-ID")
+		dogstatsd.LogTwitchRequest(dogstatsd.RouteGetEventSubSubscriptions, svc, res.ResponseCommon, err, d)
+		dogstatsd.LogEventSubSubscriptionCount(res, svc)
+	}()
 
 	if err != nil {
 		c.AbortWithStatusJSON(500, gin.H{

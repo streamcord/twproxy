@@ -7,16 +7,6 @@ import (
 	"time"
 )
 
-// Twitch API routes
-const (
-	RouteGetClips        = "/helix/clips"
-	RouteGetGames        = "/helix/games"
-	RouteGetStreams      = "/helix/streams"
-	RouteGetUsers        = "/helix/users"
-	RouteGetUsersFollows = "/helix/users/follows"
-	RouteGetOauthToken   = "/oauth/token"
-)
-
 // parseRLInfo parses ratelimit info from a request into a string.
 // Format: remaining/total
 func parseRLInfo(res helix.ResponseCommon) string {

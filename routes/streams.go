@@ -33,7 +33,7 @@ func GetStreams(c *gin.Context) {
 			"status":  500,
 		})
 		return
-	} else if res.StatusCode != 200 {
+	} else if res.StatusCode > 399 {
 		c.AbortWithStatusJSON(res.StatusCode, gin.H{
 			"error":   res.Error,
 			"message": res.ErrorMessage,
@@ -42,5 +42,5 @@ func GetStreams(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, res.Data)
+	c.JSON(res.StatusCode, res.Data)
 }

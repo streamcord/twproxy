@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"twproxy/middleware"
 	"twproxy/routes"
+	"twproxy/routes/eventsub"
 )
 
 // NewRouter ...
@@ -19,6 +20,11 @@ func NewRouter() *gin.Engine {
 	h.GET("/streams", routes.GetStreams)
 	h.GET("/users", routes.GetUsers)
 	h.GET("/users/follows", routes.GetUsersFollows)
+
+	e := h.Group("/eventsub")
+	e.DELETE("/subscriptions", eventsub.DeleteEventSubSubscription)
+	e.GET("/subscriptions", eventsub.GetEventSubSubscriptions)
+	e.POST("/subscriptions", eventsub.CreateEventSubSubscription)
 
 	return r
 }

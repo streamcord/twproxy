@@ -43,7 +43,7 @@ func requestToken(svcName string, c *helix.Client) helix.AccessCredentials {
 			Str("service", svcName).
 			Err(err).
 			Msg("Failed to request app access token")
-	} else if res.StatusCode != 200 {
+	} else if res.StatusCode > 399 {
 		log.Fatal().
 			Str("service", svcName).
 			Int("status", res.StatusCode).

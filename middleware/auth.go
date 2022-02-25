@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 	"twproxy/config"
 	"twproxy/twitch"
 )
@@ -28,6 +29,7 @@ func AuthMiddleware(c *gin.Context) {
 
 	svcAuth := c.Request.Header.Get("Authorization")
 	if svcAuth != "Bearer "+svc.Auth {
+		log.Warn().Str("service", svcName).Str("auth", svcAuth).Msg("Invalid authorization attempt")
 		c.AbortWithStatusJSON(403, gin.H{
 			"error":   "Forbidden",
 			"message": "Invalid auth for service '" + svcName + "'",

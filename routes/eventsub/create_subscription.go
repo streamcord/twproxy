@@ -8,6 +8,15 @@ import (
 	"twproxy/twitch"
 )
 
+// CreateEventSubSubscriptionResponseData - Wrapper object for response data from CreateEventSubSubscription.
+// Used for JSON serialization.
+type CreateEventSubSubscriptionResponseData struct {
+	Total                 int                          `json:"total"`
+	TotalCost             int                          `json:"total_cost"`
+	MaxTotalCost          int                          `json:"max_total_cost"`
+	EventSubSubscriptions []helix.EventSubSubscription `json:"data"`
+}
+
 // CreateEventSubSubscription - Proxy of https://dev.twitch.tv/docs/api/reference#create-eventsub-subscription
 func CreateEventSubSubscription(c *gin.Context) {
 	t := c.MustGet("helix").(*twitch.Client).T
@@ -49,5 +58,10 @@ func CreateEventSubSubscription(c *gin.Context) {
 		return
 	}
 
-	c.JSON(res.StatusCode, res.Data)
+	c.JSON(res.StatusCode, CreateEventSubSubscriptionResponseData{
+		Total:                 res.Data.Total,
+		TotalCost:             res.Data.TotalCost,
+		MaxTotalCost:          res.Data.MaxTotalCost,
+		EventSubSubscriptions: res.Data.EventSubSubscriptions,
+	})
 }

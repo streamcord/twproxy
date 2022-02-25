@@ -5,11 +5,12 @@ import (
 	"github.com/nicklaw5/helix"
 	"time"
 	"twproxy/dogstatsd"
+	"twproxy/twitch"
 )
 
 // CreateEventSubSubscription - Proxy of https://dev.twitch.tv/docs/api/reference#create-eventsub-subscription
 func CreateEventSubSubscription(c *gin.Context) {
-	t := c.MustGet("helix").(*helix.Client)
+	t := c.MustGet("helix").(*twitch.Client).T
 
 	var sub helix.EventSubSubscription
 	err := c.BindJSON(&sub)

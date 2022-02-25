@@ -5,12 +5,13 @@ import (
 	"github.com/nicklaw5/helix"
 	"time"
 	"twproxy/dogstatsd"
+	"twproxy/twitch"
 	"twproxy/utils"
 )
 
 // GetClips - Proxy of https://dev.twitch.tv/docs/api/reference#get-clips
 func GetClips(c *gin.Context) {
-	t := c.MustGet("helix").(*helix.Client)
+	t := c.MustGet("helix").(*twitch.Client).T
 
 	start := time.Now()
 	res, err := t.GetClips(&helix.ClipsParams{

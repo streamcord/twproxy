@@ -2,15 +2,15 @@ package eventsub
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nicklaw5/helix"
 	"net/http"
 	"time"
 	"twproxy/dogstatsd"
+	"twproxy/twitch"
 )
 
 // DeleteEventSubSubscription - Proxy of https://dev.twitch.tv/docs/api/reference#delete-eventsub-subscription
 func DeleteEventSubSubscription(c *gin.Context) {
-	t := c.MustGet("helix").(*helix.Client)
+	t := c.MustGet("helix").(*twitch.Client).T
 
 	start := time.Now()
 	res, err := t.RemoveEventSubSubscription(c.Query("id"))

@@ -5,11 +5,12 @@ import (
 	"github.com/nicklaw5/helix"
 	"time"
 	"twproxy/dogstatsd"
+	"twproxy/twitch"
 )
 
 // GetEventSubSubscriptions - Proxy of https://dev.twitch.tv/docs/api/reference#get-eventsub-subscriptions
 func GetEventSubSubscriptions(c *gin.Context) {
-	t := c.MustGet("helix").(*helix.Client)
+	t := c.MustGet("helix").(*twitch.Client).T
 
 	start := time.Now()
 	res, err := t.GetEventSubSubscriptions(&helix.EventSubSubscriptionsParams{

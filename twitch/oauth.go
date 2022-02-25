@@ -9,9 +9,9 @@ import (
 
 // EnsureAppAccessToken requests an App Access Token and creates a background task to automatically refresh the token
 // before it expires.
-func EnsureAppAccessToken(svcName string, c *helix.Client) {
+func (c *Client) EnsureAppAccessToken() {
 	// Request and set an app access token
-	creds := requestToken(svcName, c)
+	creds := requestToken(c.Service, c.T)
 
 	// Start the oauth token refresh service
 	go func() {
@@ -19,7 +19,7 @@ func EnsureAppAccessToken(svcName string, c *helix.Client) {
 			// Convert expiry time to time.Duration, and add a safety of 60 seconds to allow for token refresh
 			expiresIn := time.Duration(creds.ExpiresIn-60) * time.Second
 			log.Info().
-				Str("service", svcName).
+				Str("service", c.Service).
 				Msgf(
 					"Access token will expire in %s (~%v days)",
 					expiresIn.String(),
@@ -27,7 +27,7 @@ func EnsureAppAccessToken(svcName string, c *helix.Client) {
 
 			time.Sleep(expiresIn)
 
-			creds = requestToken(svcName, c)
+			creds = requestToken(c.Service, c.T)
 		}
 	}()
 }

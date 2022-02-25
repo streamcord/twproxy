@@ -2,8 +2,8 @@ package utils
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nicklaw5/helix"
 	"github.com/rs/zerolog/log"
+	"github.com/streamcord/helix/v2"
 	"strconv"
 )
 

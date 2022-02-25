@@ -1,8 +1,8 @@
 package twitch
 
 import (
-	"github.com/nicklaw5/helix"
 	"github.com/rs/zerolog/log"
+	"github.com/streamcord/helix/v2"
 	"time"
 	"twproxy/dogstatsd"
 )

@@ -1,8 +1,8 @@
 package twitch
 
 import (
-	"github.com/nicklaw5/helix"
 	"github.com/rs/zerolog/log"
+	"github.com/streamcord/helix/v2"
 	"net/http"
 	"time"
 	"twproxy/config"
@@ -33,7 +33,7 @@ func NewClientFromService(name string, s config.Service) *Client {
 		ClientSecret:  s.ClientSecret,
 		HTTPClient:    httpClient,
 		RateLimitFunc: c.genRatelimitFunc(),
-		UserAgent:     "Go-http-client/1.1 (github.com/streamcord/twproxy v1.0, github.com/nicklaw5/helix v2.2.0)",
+		UserAgent:     "Go-http-client/1.1 (github.com/streamcord/twproxy v1.0, github.com/streamcord/helix v2.2.0)",
 	})
 	if err != nil {
 		log.Fatal().

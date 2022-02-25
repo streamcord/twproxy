@@ -1,7 +1,7 @@
 package twitch
 
 import (
-	"github.com/nicklaw5/helix"
+	"github.com/streamcord/helix/v2"
 )
 
 // Client ...

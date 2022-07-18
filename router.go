@@ -5,6 +5,7 @@ import (
 	"twproxy/middleware"
 	"twproxy/routes"
 	"twproxy/routes/eventsub"
+	"twproxy/routes/spyglass"
 )
 
 // NewRouter ...
@@ -25,6 +26,9 @@ func NewRouter() *gin.Engine {
 	e.DELETE("/subscriptions", eventsub.DeleteEventSubSubscription)
 	e.GET("/subscriptions", eventsub.GetEventSubSubscriptions)
 	e.POST("/subscriptions", eventsub.CreateEventSubSubscription)
+
+	s := r.Group("/spyglass")
+	s.POST("/callback", spyglass.PostCallback)
 
 	return r
 }

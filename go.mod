@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/DataDog/datadog-go/v5 v5.0.2
+	github.com/alexellis/hmac v1.3.0 // indirect
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect

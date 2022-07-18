@@ -22,13 +22,21 @@ func NewRouter() *gin.Engine {
 	h.GET("/users", routes.GetUsers)
 	h.GET("/users/follows", routes.GetUsersFollows)
 
+	// /helix/eventsub/...
 	e := h.Group("/eventsub")
 	e.DELETE("/subscriptions", eventsub.DeleteEventSubSubscription)
 	e.GET("/subscriptions", eventsub.GetEventSubSubscriptions)
 	e.POST("/subscriptions", eventsub.CreateEventSubSubscription)
 
+	// /spyglass/...
 	s := r.Group("/spyglass")
 	s.POST("/callback", spyglass.PostCallback)
+
+	// /spyglass/guilds/:guild_id/channels/:channel_id/...
+	g := s.Group("/guilds/:guild_id/channels/:channel_id")
+	g.POST("/notifications", spyglass.CreateNotification)
+	g.DELETE("/notifications/:notification_id", spyglass.DeleteNotification)
+	g.PATCH("/notifications/:notification_id", spyglass.UpdateNotification)
 
 	return r
 }

@@ -8,6 +8,7 @@ import (
 	"twproxy/config"
 	"twproxy/dogstatsd"
 	"twproxy/twitch"
+	"twproxy/utils"
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 
 	dogstatsd.New()
 	twitch.CreateClientsFromServices(config.GlobalConfig.Services)
+	utils.RegisterCustomBindings()
 
 	r := NewRouter()
 	r.Run("0.0.0.0:8181")
